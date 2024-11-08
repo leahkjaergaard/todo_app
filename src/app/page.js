@@ -1,10 +1,16 @@
-import Image from "next/image";
 import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
+  let response = await fetch("https://dummyjson.com/products");
+  let data = await response.json();
+
   return (
-    <div className="h-screen grid place-items-center">
-      <Link href="/todo">To-Do App</Link>
+    <div>
+      {data.products.map((product) => (
+        <div key={product.id}>
+          <Link href={`/detaljer/${product.id}`}>{product.title}</Link>
+        </div>
+      ))}
     </div>
   );
 }
